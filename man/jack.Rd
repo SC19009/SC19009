@@ -18,7 +18,6 @@ Jackknife estimator for mean and its variance using Rcpp
 \examples{
 \dontrun{
 x<-rnorm(1000,5,5)
-y<-jack(x)
-print(y)
+jack(x)
 }
 }

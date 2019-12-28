@@ -1,19 +1,42 @@
-#' @title Kernel density estimator
+#' @title BCa confidence interval
 #' @useDynLib SC19009
-#' @description A kernel density estimator using R
+#' @description A function calculating BCa confidence interval for population mean using R
 #' @import Rcpp
-#' @importFrom stats density
-#' @importFrom graphics hist lines
+#' @importFrom stats pnorm qnorm quantile
 #' @param x a vector composed of random sample points
-#' @return a histogram for sample frequency whith the estimated density curve
+#' @param alpha confidence level
+#' @param B replicates of bootstrap sampling
+#' @return a vector represent the confidence interval
 #' @examples
 #' \dontrun{
-#' x<-rt(2000,3)
-#' kde(x)
+#' x<-rt(200,3)
+#' BCa(x,500)
 #' }
 #' @export
-kde<-function(x){
-  hist(x,xlab="x",ylab="f(x)",main="Kernel density estimation",freq=F)
-  f<-density(x)
-  lines(f,xlab="x",ylab="f(x)",col="blue",sub="")
+BCa<-function(x,alpha,B){
+  n<-length(x)
+  bar<-mean(x)
+  
+  bar.boot<-numeric(B)
+  for (i in 1:B) {
+    j<-sample(1:n,n,replace=TRUE)
+    bar.boot[i]<-mean(x[j])
+  }
+  
+  bar.jack<-(sum(x)-x)/(n-1)
+  bar0.jack<-mean(bar.jack)
+  
+  z<-qnorm((1-alpha)/2)
+  z0<-qnorm(mean(bar.boot<bar))
+  alpha0<-sum((bar0.jack-bar.jack)^3)/(6*sum(abs(bar0.jack-bar.jack)^3))
+  
+  alpha1<-pnorm(z0+(z0+z)/(1-alpha0*(z0+z)))
+  alpha2<-pnorm(z0+(z0-z)/(1-alpha0*(z0-z)))
+  
+  lb.BCa<-quantile(bar.boot,alpha1,names=FALSE)
+  ub.BCa<-quantile(bar.boot,alpha2,names=FALSE)
+  
+  out<-c(lb.BCa,ub.BCa)
+  names(out)<-c("lb","ub")
+  return(out)
 }

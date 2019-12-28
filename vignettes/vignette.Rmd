@@ -1,7 +1,7 @@
 ---
 title: "Vignette for the final"
 author: "SC19009"
-date: "`r Sys.Date()`"
+date: "2019-12-27"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette for the final}
@@ -9,25 +9,46 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-# Part 1:Introduction for the two functions
-## Function_1:kde
-The function kde conducts a kernel density estimation for single population in R. Package kedd is required to implement this function.  
-The source R code for kde is as following:
+# Part 1: Introduction for the two functions
+## Function_1: BCa
+The function BCa calculates BCa confidence interval for population mean in R.  
+The source R code for BCa is as following:
 ```{r,eval=FALSE}
-kde<-function(x){
-  library(kedd)
-  es<-dkde(x,deriv.order=0,h=h.amise(x,deriv.order=0)$h)
-  hist(x,xlab="x",ylab="f(x)",main="Kernel density estimation",freq=F)
-  lines(es,xlab="x",ylab="f(x)",col="blue",sub="")
+BCa<-function(x,alpha,B){
+  n<-length(x)
+  bar<-mean(x)
+  
+  bar.boot<-numeric(B)
+  for (i in 1:B) {
+    j<-sample(1:n,n,replace=TRUE)
+    bar.boot[i]<-mean(x[j])
+  }
+  
+  bar.jack<-(sum(x)-x)/(n-1)
+  bar0.jack<-mean(bar.jack)
+  
+  z<-qnorm((1-alpha)/2)
+  z0<-qnorm(mean(bar.boot<bar))
+  alpha0<-sum((bar0.jack-bar.jack)^3)/(6*sum(abs(bar0.jack-bar.jack)^3))
+  
+  alpha1<-pnorm(z0+(z0+z)/(1-alpha0*(z0+z)))
+  alpha2<-pnorm(z0+(z0-z)/(1-alpha0*(z0-z)))
+  
+  lb.BCa<-quantile(bar.boot,alpha1,names=FALSE)
+  ub.BCa<-quantile(bar.boot,alpha2,names=FALSE)
+  
+  out<-c(lb.BCa,ub.BCa)
+  names(out)<-c("lb","ub")
+  return(out)
 }
 ```
 
-To implement kde, input a vector composed of sample points. Corresponding output is a sample frequency histogram plotted the fitted density curve.  
+To implement BCa, input a vector composed of sample points, confidence level and number of bootstrap replicates. Corresponding output is a named vecotr representing the confidence interval.  
 A simple implementation is as following:
 ```{r}
 library(SC19009)
-x<-rbeta(2000,4,4)
-kde(x)
+x<-rbeta(200,4,4)
+BCa(x,0.95,500)
 ```
 
 ## Function_2:jack
@@ -59,13 +80,12 @@ NumericVector jack(NumericVector x){
 }
 ```
 
-To implement jack, input a vector composed of sample points. Corresponding output is a 2-dimension vector, whose first element is the mean estimate: $\hat\mu$ and the second element is the variance estimate for the estimated mean: $\hat{Var}(\hat\mu)$.  
+To implement jack, input a vector composed of sample points. Corresponding output is a 2-dimension named vector, whose first element is the mean estimate: $\hat\mu$ and the second element is the variance estimate for the estimated mean: $\hat{Var}(\hat\mu)$.  
 A simple implementation for jack is as following:
 
 ```{r}
 y<-rnorm(500,4,4)
-theta<-jack(y)
-print(theta)
+jack(y)
 ```
 
 # Part 2: All homework answers

@@ -8,8 +8,7 @@
 #' @examples
 #' \dontrun{
 #' x<-rnorm(1000,5,5)
-#' y<-jack(x)
-#' print(y)
+#' jack(x)
 #' }
 #' @export
 jack <- function(x) {

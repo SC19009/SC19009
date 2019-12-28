@@ -8,8 +8,7 @@ using namespace Rcpp;
 //' @examples
 //' \dontrun{
 //' x<-rnorm(1000,5,5)
-//' y<-jack(x)
-//' print(y)
+//' jack(x)
 //' }
 //' @export
 // [[Rcpp::export]]
@@ -33,6 +32,6 @@ NumericVector jack(NumericVector x){
   
   double var=(n-1)*sum2/n;
   
-  NumericVector out= NumericVector::create(jack,var);
+  NumericVector out= NumericVector::create(Named("jack",jack),Named("var",var));
   return (out);
 }
