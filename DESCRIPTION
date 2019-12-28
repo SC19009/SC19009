@@ -1,0 +1,17 @@
+Package: SC19009
+Type: Package
+Title: Final for Statistical Computation course
+Version: 1.0
+Date: 2019-12-23
+Author: SC19009
+Maintainer: SC19009 <695984123@qq.com>
+Description: Two functions and all Homework answers
+License: GPL (>= 2)
+Imports: Rcpp (>= 1.0.3), stats, graphics, Ball, DAAG, boot, bootstrap, lattice, microbenchmark, mnormt
+LinkingTo: Rcpp
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 7.0.2
+Encoding: UTF-8
+URL: http://github.com/SC19009/SC19009
+BugReports: http://github.com/SC19009/SC19009/issues
