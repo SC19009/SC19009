@@ -43,7 +43,7 @@ BCa<-function(x,alpha,B){
 }
 ```
 
-To implement BCa, input a vector composed of sample points, confidence level and number of bootstrap replicates. Corresponding output is a named vecotr representing the confidence interval.  
+To implement BCa, input a vector composed of sample points, confidence level and number of bootstrap replicates. Corresponding output is a named vector representing the confidence interval.  
 A simple implementation is as following:
 ```{r}
 library(SC19009)
@@ -52,7 +52,7 @@ BCa(x,0.95,500)
 ```
 
 ## Function_2:jack
-The function jack conducts a jackknife estimation in C++.  
+The function jack conducts a jackknife estimation for population mean and the variance for the estimator in C++.  
 The source C++ code for jack is as following:
 ```{r,eval=FALSE}
 NumericVector jack(NumericVector x){
@@ -63,7 +63,7 @@ NumericVector jack(NumericVector x){
     bar[i]=(s-x[i])/(n-1);
     sum1=sum1+bar[i];
   }
-
+  
   double bar1=sum1/n;
   double jack=n*bar0-(n-1)*bar1;
   
@@ -75,7 +75,7 @@ NumericVector jack(NumericVector x){
   
   double var=(n-1)*sum2/n;
   
-  NumericVector out= NumericVector::create(jack,var);
+  NumericVector out= NumericVector::create(Named("jack",jack),Named("var",var));
   return (out);
 }
 ```
@@ -102,7 +102,9 @@ xtable,
 devtools,
 
 ## Example 2 : figures
+
 \* I utilised three different functions to create diffrent graphics
+
 ```{r}
 x<-rnorm(100,mean=0,sd=1)
 y<-rnorm(100,mean=1,sd=2)
@@ -112,7 +114,9 @@ barplot(c(x,y))
 ```
 
 ## Example 3 : tables
+
 \* Here's a simple table composed of three person's name and their age
+
 ```{r}
 name<-c("Tom","Tony","Tomy")
 age<-c(20,30,40)
@@ -120,6 +124,7 @@ table(name,age)
 ```
 
 \* The second table consists of a Poisson variable and its frequency with 100 samples
+
 ```{r}
 x<-rpois(100,3)
 ftable(x)
@@ -128,6 +133,7 @@ ftable(x)
 # 2019-9-29
 ## 3.4
 ### (1) Basic idea
+
 Through calculation , we can derive the distribution fuction of the objective density function , namely :
 $$F(x)=1-e^{-x^{2} /\left(2 \sigma^{2}\right)} \quad, x \geq 0, \sigma>0.$$
 Evidently , when $x\in[0,+\infty)$ , $F(x)$ is continuous and strictly increasing . Moreover , we can get its inverse funtion :
