@@ -2,7 +2,7 @@
 \alias{SC19009-package}
 \docType{package}
 \title{
-  This package is the final for Statistical Computing course consists of two functions and all homework answers.
+  This package is the final for 'Statistical Computing' course consists of two functions and all homework answers.
 }
 \description{
   Function_1 calculates BCa confidence interval for population mean.
@@ -11,7 +11,7 @@
 }
 \details{
   Function_1 is named as BCa. Input a vector composed of sample points, confidence level, and bootstrap replicates to obtain a BCa confidence interval for mean.
-  Function_2 is named as jack. Input a vector composed of sample points to obtain the jackknife estimate for population mean and its variance (variance estimate for the mean estimate).
+  Function_2 is named as jack. Input a vector composed of sample points to obtain the jackknife estimate for population mean and its variance (estimated variance for the mean estimator).
 }
 \author{
 SC19009

@@ -2,7 +2,7 @@
 % Please edit documentation in R/RcppExports.R
 \name{jack}
 \alias{jack}
-\title{Jackknife estimator for mean and its variance}
+\title{Jackknife estimator for population mean}
 \usage{
 jack(x)
 }
@@ -10,10 +10,10 @@ jack(x)
 \item{x}{a vector composed of sample points}
 }
 \value{
-a 2-dimension vector represent the jackknife estimate of mean and its variance
+a 2-dimension vector whose first and second elements are respecitvely the jackknife estimate of mean and the estimated variance of mean estimator
 }
 \description{
-Jackknife estimator for mean and its variance using Rcpp
+Jackknife estimator for population mean and its variance using Rcpp
 }
 \examples{
 \dontrun{

@@ -5,12 +5,12 @@
 #' @importFrom stats pnorm qnorm quantile
 #' @param x a vector composed of random sample points
 #' @param alpha confidence level
-#' @param B replicates of bootstrap sampling
-#' @return a vector represent the confidence interval
+#' @param B number of bootstrap replicates
+#' @return a named vector representing the confidence interval whose first and second elements are respectively lower bound and upper bound
 #' @examples
 #' \dontrun{
 #' x<-rt(200,3)
-#' BCa(x,500)
+#' BCa(x,0.95,500)
 #' }
 #' @export
 BCa<-function(x,alpha,B){

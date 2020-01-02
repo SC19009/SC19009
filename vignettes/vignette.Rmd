@@ -8,11 +8,15 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+# Overview
+__SC19009__ is a simple R package developed for the final of 'Statistical Computing' course which is implemented through the R package _Rcpp_. This package includes two functions both based on resampling techniques. The two functions are named, respectively, _BCa_ (calculating BCa confidenceinterval for population mean) and _jack_ (calculating jackknife estimator for population mean and estimated variance for the mean estimator). Besides, the vignette for the package also includes all homework answers assingned throughout the whole semester.
 
 # Part 1: Introduction for the two functions
+The compiled two functions are based on resampling techniques: jackknife and bootstrap and their extended application in point estimation and interval estimation. The estimator for population mean and its confidence interval are considered in the two functions.
+
 ## Function_1: BCa
-The function BCa calculates BCa confidence interval for population mean in R.  
-The source R code for BCa is as following:
+The function _BCa_ calculates BCa confidence interval for population mean in R.  
+The source R code for _BCa_ is as following:
 ```{r,eval=FALSE}
 BCa<-function(x,alpha,B){
   n<-length(x)
@@ -43,7 +47,7 @@ BCa<-function(x,alpha,B){
 }
 ```
 
-To implement BCa, input a vector composed of sample points, confidence level and number of bootstrap replicates. Corresponding output is a named vector representing the confidence interval.  
+To implement _BCa_, input a vector composed of sample points, confidence level and number of bootstrap replicates. Corresponding output is a named vector representing the confidence interval.  
 A simple implementation is as following:
 ```{r}
 library(SC19009)
@@ -51,9 +55,9 @@ x<-rbeta(200,4,4)
 BCa(x,0.95,500)
 ```
 
-## Function_2:jack
-The function jack conducts a jackknife estimation for population mean and the variance for the estimator in C++.  
-The source C++ code for jack is as following:
+## Function_2: jack
+The function _jack_ conducts a jackknife estimation for population mean and the variance for the estimator in C++.  
+The source C++ code for _jack_ is as following:
 ```{r,eval=FALSE}
 NumericVector jack(NumericVector x){
   int n=sizeof(x); double s=sum(x); double bar0=s/n;
@@ -80,8 +84,8 @@ NumericVector jack(NumericVector x){
 }
 ```
 
-To implement jack, input a vector composed of sample points. Corresponding output is a 2-dimension named vector, whose first element is the mean estimate: $\hat\mu$ and the second element is the variance estimate for the estimated mean: $\hat{Var}(\hat\mu)$.  
-A simple implementation for jack is as following:
+To implement _jack_, input a vector composed of sample points. Corresponding output is a 2-dimension named vector, whose first element is the mean estimate: $\hat\mu$ and the second element is the estimated variance for the mean estimator: $\hat{Var}(\hat\mu)$.  
+A simple implementation for _jack_ is as following:
 
 ```{r}
 y<-rnorm(500,4,4)
@@ -515,7 +519,6 @@ for (i in theta){
 }
 
 # Power curve
-par(mfrow=c(1,2))
 plot(theta,p1,xlab="a",ylab="power",main="Beta(a,a)",type="l")
 plot(theta,p2,xlab="v",ylab="power",main="t(v)",type="l")
 ```
@@ -910,7 +913,6 @@ pv1.ball[i/k]<-mean(p1.ball<0.05)
 pv2.ball[i/k]<-mean(p2.ball<0.05)
 }
 
-par(mfrow=c(1,2))
 plot(n,pv1.dCor,xlab="n",ylab="Power",main="Model 1",type="l",ylim=c(0,1))
 lines(n,pv1.ball,type="l",col="blue")
 
@@ -1271,7 +1273,6 @@ for (i in 1:4){
 
 kable(data.frame(sigma=sigma,rate.Rcpp=rateC,rate.R=rateR))
 for (i in 1:4) {
-  par(mfrow=c(1,2))
   plot(1:N,xC[[i]],type="l",xlab="n",ylab="X",main=paste("Rcpp: σ=",sigma[i]))
   plot(1:N,xR[[i]],type="l",xlab="n",ylab="X",main=paste("R: σ=",sigma[i]))
 }

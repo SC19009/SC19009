@@ -11,10 +11,10 @@ BCa(x, alpha, B)
 
 \item{alpha}{confidence level}
 
-\item{B}{replicates of bootstrap sampling}
+\item{B}{number of bootstrap replicates}
 }
 \value{
-a vector represent the confidence interval
+a named vector representing the confidence interval whose first and second elements are respectively lower bound and upper bound
 }
 \description{
 A function calculating BCa confidence interval for population mean using R
@@ -22,6 +22,6 @@ A function calculating BCa confidence interval for population mean using R
 \examples{
 \dontrun{
 x<-rt(200,3)
-BCa(x,500)
+BCa(x,0.95,500)
 }
 }

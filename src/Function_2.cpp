@@ -1,10 +1,10 @@
 #include <Rcpp.h>
 using namespace Rcpp;
 
-//' @title  Jackknife estimator for mean and its variance
-//' @description Jackknife estimator for mean and its variance using Rcpp
+//' @title  Jackknife estimator for population mean
+//' @description Jackknife estimator for population mean and its variance using Rcpp
 //' @param x a vector composed of sample points
-//' @return a 2-dimension vector represent the jackknife estimate of mean and its variance
+//' @return a 2-dimension vector whose first and second elements are respecitvely the jackknife estimate of mean and the estimated variance of mean estimator
 //' @examples
 //' \dontrun{
 //' x<-rnorm(1000,5,5)
